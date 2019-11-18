@@ -1,0 +1,7 @@
+alias	alias_DNA
+  A		4		NULL
+  C		5		NULL
+  G		6		NULL
+  T		7		NULL
+endalias
+

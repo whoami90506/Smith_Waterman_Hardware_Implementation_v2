@@ -1,0 +1,1 @@
+testbench/testfixture.v src/smithWaterman.v src/PE.v src/parserT.v src/parserQ.v src/parserOut.v src/loader.v src/buffer.v +access+rw

@@ -1,0 +1,8 @@
+sftp-config*
+.vscode
+.vscode/
+*.~lock*.xlsx#
+*~*.pptx
+*~*.xlsx
+*tsmc*
+*.sdf
