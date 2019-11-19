@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`define CYCLE    4.0           	        // Modify your clock period here
+`define CYCLE    3.24           	        // Modify your clock period here
 `define TERMINATION  50000
 
 `define DATA_T "./testbench/dat/target01.dat"
@@ -68,7 +68,7 @@ initial begin
 end
 
 initial begin
-	$timeformat(-9, 2, " ns", 17);
+	$timeformat(-9, 0, " ns", 17);
 
 	`ifdef SYN
 		$fsdbDumpfile("sw_syn.fsdb");
