@@ -29,10 +29,12 @@ module SmithWaterman(
 reg _start_i;
 reg [`MATCH_BIT-1 : 0] _match_i, _mismatch_i, _alpha_i, _beta_i;
 reg [`SRAM_WORD_WIDTH-1 : 0] _data_i;
+reg post_busy;
 wire n_busy_o;
 
-reg  [`CALC_BIT-1 : 0] match, mismatch, alpha, beta;
-wire [`CALC_BIT-1 : 0] n_match, n_mismatch, n_alpha, n_beta;
+reg  [`MATCH_BIT-1 : 0] match_r, mismatch_r, alpha_r, beta_r;
+wire [`MATCH_BIT-1 : 0] n_match_r, n_mismatch_r, n_alpha_r, n_beta_r;
+wire [ `CALC_BIT-1 : 0] match, mismatch, alpha, beta;
 
 //loader
 wire [`SRAM_WORD_WIDTH-1 : 0] loader_T_data, loader_Q_data;
@@ -58,10 +60,15 @@ wire [`CALC_BIT -1 : 0] PE_f_b   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_max [0 : `PE_NUM];
 wire [`PE_NUM -1 : 0] PE_update_w;
 
-assign n_match    = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd0}},     _match_i}                 : match;
-assign n_mismatch = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd1}}, ~_mismatch_i + `MATCH_BIT'd1} : mismatch;
-assign n_alpha    = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd1}},    ~_alpha_i + `MATCH_BIT'd1} : alpha;
-assign n_beta     = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd1}},     ~_beta_i + `MATCH_BIT'd1} : beta;
+assign n_match_r    = _start_i & (~busy_o | ~post_busy ) ?     _match_i                 : match;
+assign n_mismatch_r = _start_i & (~busy_o | ~post_busy ) ? ~_mismatch_i + `MATCH_BIT'd1 : mismatch;
+assign n_alpha_r    = _start_i & (~busy_o | ~post_busy ) ?    ~_alpha_i + `MATCH_BIT'd1 : alpha;
+assign n_beta_r     = _start_i & (~busy_o | ~post_busy ) ?     ~_beta_i + `MATCH_BIT'd1 : beta;
+
+assign match    = {{(`CALC_BIT - `MATCH_BIT){1'd0}}, match_r    };
+assign mismatch = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, mismatch_r };
+assign alpha    = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, alpha_r    };
+assign beta     = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, beta_r     };
 
 assign PE_t  [0] = pT_t;
 assign PE_v  [0] = `CALC_BIT'd0;
@@ -108,30 +115,32 @@ always @(posedge clk or negedge rst_n) begin
         _start_i <= 1'b0;
         _data_i <= `SRAM_WORD_WIDTH'd0;
         busy_o <= 1'b0;
+        post_busy <= 1'b0;
 
         _match_i <= `MATCH_BIT'd0;
         _mismatch_i <= `MATCH_BIT'd0;
         _alpha_i <= `MATCH_BIT'd0;
         _beta_i <= `MATCH_BIT'd0;
 
-        match <= `CALC_BIT'd0;
-        mismatch <= `CALC_BIT'd0;
-        alpha <= `CALC_BIT'd0;
-        beta <= `CALC_BIT'd0;
+        match_r    <= `MATCH_BIT'd0;
+        mismatch_r <= {`MATCH_BIT{1'd1}};
+        alpha_r    <= {`MATCH_BIT{1'd1}};
+        beta_r     <= {`MATCH_BIT{1'd1}};
     end else begin
         _start_i <= start_i;
         _data_i <= data_i;
         busy_o <= n_busy_o;
+        post_busy <= busy_o;
 
         _match_i <= match_i;
         _mismatch_i <= mismatch_i;
         _alpha_i <= alpha_i;
         _beta_i <= beta_i;
 
-        match <= n_match;
-        mismatch <= n_mismatch;
-        alpha <= n_alpha;
-        beta <= n_beta;
+        match_r    <= n_match_r;
+        mismatch_r <= n_mismatch_r;
+        alpha_r    <= n_alpha_r;
+        beta_r     <= n_beta_r;
     end
 end
 
