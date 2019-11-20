@@ -14,7 +14,8 @@ module Buffer (
     input update_iw,
     output reg [2:0] q_o,
 
-    output reg full_o, ready_one_o, ready_two_o
+    output reg full_o, ready_one_o, ready_two_o,
+    output [2:0] next_q_ow
 );
 
 wire [2:0] n_q_o;
@@ -37,6 +38,7 @@ assign n_ready_two_o = n_size >= 2;
 assign n_got_data = got_data ? pouring_i : q_i[2];
 assign get = (q_i[2] | (pouring_last & ~pouring_i & ~got_data)) & ~(full_o & ~update_iw);
 assign send = update_iw && (size != `BUFFER_DEPTH_BIT'd0);
+assign next_q_ow = n_q_o;
 
 integer i;
 always @(*) begin

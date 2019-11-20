@@ -29,10 +29,12 @@ module SmithWaterman(
 reg _start_i;
 reg [`MATCH_BIT-1 : 0] _match_i, _mismatch_i, _alpha_i, _beta_i;
 reg [`SRAM_WORD_WIDTH-1 : 0] _data_i;
+reg post_busy;
 wire n_busy_o;
 
-reg  [`CALC_BIT-1 : 0] match, mismatch, alpha, beta;
-wire [`CALC_BIT-1 : 0] n_match, n_mismatch, n_alpha, n_beta;
+reg  [`MATCH_BIT-1 : 0] match_r, mismatch_r, alpha_r, beta_r;
+wire [`MATCH_BIT-1 : 0] n_match_r, n_mismatch_r, n_alpha_r, n_beta_r;
+wire [ `CALC_BIT-1 : 0] match, mismatch, alpha, beta;
 
 //loader
 wire [`SRAM_WORD_WIDTH-1 : 0] loader_T_data, loader_Q_data;
@@ -41,13 +43,20 @@ wire loader_T_valid, loader_Q_valid;
 //ParserT
 wire pT_busy, pT_request;
 wire [`SRAM_ADDR_BIT-1 : 0] pT_addr;
-wire [2:0] pT_t;
+wire [2:0] pT_t, pT_next_t_w;
 
 //ParserQ
 wire pQ_busy, pQ_request, pQ_pouring;
 wire [`SRAM_ADDR_BIT-1 : 0] pQ_addr;
 wire [1:0] pQ_q;
 wire [`PE_NUM-1 : 0] pQ_valid;
+
+//buffer
+wire [2:0] buf_q [0 : `PE_NUM];
+wire [2:0] buf_next_q_w [0 : `PE_NUM];
+wire [`PE_NUM-1 : 0] buf_full, buf_ready_one, buf_ready_two;
+assign buf_next_q_w[`PE_NUM] = 3'd0;
+assign buf_q[`PE_NUM] = 3'd0;
 
 //PE
 genvar idx;
@@ -56,22 +65,28 @@ wire [`CALC_BIT -1 : 0] PE_v   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_v_a [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_f_b   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_max [0 : `PE_NUM];
+wire [`CALC_BIT -1 : 0] PE_v_diag_lut [0 : `PE_NUM];
 wire [`PE_NUM -1 : 0] PE_update_w;
+reg  [`CALC_BIT -1 : 0] PE_0_v_diag_lut;
+wire  [`CALC_BIT -1 : 0] n_PE_0_v_diag_lut;
 
-assign n_match    = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd0}},     _match_i}                 : match;
-assign n_mismatch = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd1}}, ~_mismatch_i + `MATCH_BIT'd1} : mismatch;
-assign n_alpha    = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd1}},    ~_alpha_i + `MATCH_BIT'd1} : alpha;
-assign n_beta     = _start_i ? {{(`CALC_BIT - `MATCH_BIT){1'd1}},     ~_beta_i + `MATCH_BIT'd1} : beta;
+assign n_match_r    = _start_i & (~busy_o | ~post_busy ) ?     _match_i                 : match;
+assign n_mismatch_r = _start_i & (~busy_o | ~post_busy ) ? ~_mismatch_i + `MATCH_BIT'd1 : mismatch;
+assign n_alpha_r    = _start_i & (~busy_o | ~post_busy ) ?    ~_alpha_i + `MATCH_BIT'd1 : alpha;
+assign n_beta_r     = _start_i & (~busy_o | ~post_busy ) ?     ~_beta_i + `MATCH_BIT'd1 : beta;
+
+assign match    = {{(`CALC_BIT - `MATCH_BIT){1'd0}}, match_r    };
+assign mismatch = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, mismatch_r };
+assign alpha    = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, alpha_r    };
+assign beta     = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, beta_r     };
 
 assign PE_t  [0] = pT_t;
 assign PE_v  [0] = `CALC_BIT'd0;
 assign PE_v_a[0] = alpha;
 assign PE_f_b  [0] = beta;
 assign PE_max[0] = `CALC_BIT'd0;
-
-//buffer
-wire [2:0] buf_q [0 : `PE_NUM -1];
-wire [`PE_NUM-1 : 0] buf_full, buf_ready_one, buf_ready_two;
+assign n_PE_0_v_diag_lut = (pT_next_t_w[1:0] == buf_next_q_w[0][1:0] ) ? match : mismatch; 
+assign PE_v_diag_lut[0] = PE_0_v_diag_lut;
 
 assign n_busy_o = (_start_i | pT_busy) | (pQ_busy | buf_ready_one[`PE_NUM-1]) | start_i;
 
@@ -81,7 +96,7 @@ Loader loader(.clk(clk), .rst_n(rst_n), .sel_T_o(select_T_o), .addr_o(addr_o), .
 
 Parser_T pT(.clk(clk), .rst_n(rst_n), .start_i(_start_i), .q_ready_one_i(buf_ready_one[0]), .q_ready_two_i(buf_ready_two[0]), 
     .q_busy_i(pQ_busy), .busy_o(pT_busy), .data_i(loader_T_data), .valid_i(loader_T_valid), 
-    .addr_o(pT_addr), .request_o(pT_request), .t_out_o(pT_t));
+    .addr_o(pT_addr), .request_o(pT_request), .t_out_o(pT_t), .next_t_ow(pT_next_t_w));
 
 Parser_Q pQ(.clk(clk), .rst_n(rst_n), .start_i(_start_i), .buffer_full_i(buf_full[`PE_NUM-1]), .busy_o(pQ_busy), 
     .data_i(loader_Q_data), .valid_i(loader_Q_valid), .addr_o(pQ_addr), .request_o(pQ_request), 
@@ -92,10 +107,13 @@ generate
         PE PE_cell(.clk(clk), .rst_n(rst_n), .t_in(PE_t[idx]), .q_in(buf_q[idx]), .t_out(PE_t[idx+1]), .update_q_ow(PE_update_w[idx]),
                    .v_in (PE_v[idx]  ), .v_in_a (PE_v_a[idx]  ), .f_in_b (PE_f_b[idx]  ), .max_in (PE_max[idx]  ),
                    .v_out(PE_v[idx+1]), .v_out_a(PE_v_a[idx+1]), .f_out_b(PE_f_b[idx+1]), .max_out(PE_max[idx+1]), 
-                   .match_i(match), .mismatch_i(mismatch), .alpha_i(alpha), .beta_i(beta));
+                   .match_i(match), .mismatch_i(mismatch), .alpha_i(alpha), .beta_i(beta), 
+                   .next_PE_next_q_iw(buf_next_q_w[idx+1]), .next_PE_q_i(buf_q[idx+1]), .v_diag_lut_i(PE_v_diag_lut[idx]),
+                   .v_diag_lut_o(PE_v_diag_lut[idx+1]) );
 
         Buffer buf_cell(.clk(clk), .rst_n(rst_n), .q_i({pQ_valid[idx], pQ_q}), .pouring_i(pQ_pouring), .update_iw(PE_update_w[idx]), 
-                .q_o(buf_q[idx]), .full_o(buf_full[idx]), .ready_one_o(buf_ready_one[idx]), .ready_two_o(buf_ready_two[idx]));
+                .q_o(buf_q[idx]), .full_o(buf_full[idx]), .ready_one_o(buf_ready_one[idx]), .ready_two_o(buf_ready_two[idx]), 
+                .next_q_ow(buf_next_q_w[idx]));
     end
 endgenerate
 
@@ -108,30 +126,36 @@ always @(posedge clk or negedge rst_n) begin
         _start_i <= 1'b0;
         _data_i <= `SRAM_WORD_WIDTH'd0;
         busy_o <= 1'b0;
+        post_busy <= 1'b0;
 
         _match_i <= `MATCH_BIT'd0;
         _mismatch_i <= `MATCH_BIT'd0;
         _alpha_i <= `MATCH_BIT'd0;
         _beta_i <= `MATCH_BIT'd0;
 
-        match <= `CALC_BIT'd0;
-        mismatch <= `CALC_BIT'd0;
-        alpha <= `CALC_BIT'd0;
-        beta <= `CALC_BIT'd0;
+        match_r    <= `MATCH_BIT'd0;
+        mismatch_r <= {`MATCH_BIT{1'd1}};
+        alpha_r    <= {`MATCH_BIT{1'd1}};
+        beta_r     <= {`MATCH_BIT{1'd1}};
+
+        PE_0_v_diag_lut <= `CALC_BIT'd0;
     end else begin
         _start_i <= start_i;
         _data_i <= data_i;
         busy_o <= n_busy_o;
+        post_busy <= busy_o;
 
         _match_i <= match_i;
         _mismatch_i <= mismatch_i;
         _alpha_i <= alpha_i;
         _beta_i <= beta_i;
 
-        match <= n_match;
-        mismatch <= n_mismatch;
-        alpha <= n_alpha;
-        beta <= n_beta;
+        match_r    <= n_match_r;
+        mismatch_r <= n_mismatch_r;
+        alpha_r    <= n_alpha_r;
+        beta_r     <= n_beta_r;
+
+        PE_0_v_diag_lut <= n_PE_0_v_diag_lut;
     end
 end
 
