@@ -3,7 +3,7 @@
 Report : area
 Design : SmithWaterman
 Version: N-2017.09-SP2
-Date   : Wed Nov 20 05:50:24 2019
+Date   : Wed Nov 20 14:06:34 2019
 ****************************************
 
 Library(s) Used:
@@ -11,20 +11,20 @@ Library(s) Used:
     typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
 
 Number of ports:                          111
-Number of nets:                        230699
-Number of cells:                       209886
-Number of combinational cells:         181402
-Number of sequential cells:             28484
+Number of nets:                        230970
+Number of cells:                       210258
+Number of combinational cells:         181775
+Number of sequential cells:             28483
 Number of macros/black boxes:               0
-Number of buf/inv:                      34144
-Number of references:                     211
+Number of buf/inv:                      34039
+Number of references:                     207
 
-Combinational area:            2288779.257639
-Buf/Inv area:                   248341.502039
-Noncombinational area:         1093359.810829
+Combinational area:            2176745.765174
+Buf/Inv area:                   221675.347614
+Noncombinational area:         1065133.749084
 Macro/Black Box area:                0.000000
-Net Interconnect area:        23433089.378754
+Net Interconnect area:        23448909.457275
 
-Total cell area:               3382139.068468
-Total area:                   26815228.447222
+Total cell area:               3241879.514258
+Total area:                   26690788.971534
 1

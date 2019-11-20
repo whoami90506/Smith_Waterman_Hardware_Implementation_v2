@@ -7,7 +7,7 @@ Report : power
         -analysis_effort low
 Design : SmithWaterman
 Version: N-2017.09-SP2
-Date   : Wed Nov 20 05:50:42 2019
+Date   : Wed Nov 20 14:06:53 2019
 ****************************************
 
 
@@ -33,12 +33,12 @@ Power-specific unit information :
     Leakage Power Units = 1pW
 
 
-  Cell Internal Power  = 343.1682 mW   (89%)
-  Net Switching Power  =  41.5253 mW   (11%)
+  Cell Internal Power  = 304.9098 mW   (89%)
+  Net Switching Power  =  36.1551 mW   (11%)
                          ---------
-Total Dynamic Power    = 384.6934 mW  (100%)
+Total Dynamic Power    = 341.0649 mW  (100%)
 
-Cell Leakage Power     = 618.5159 uW
+Cell Leakage Power     = 604.5170 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -48,9 +48,9 @@ io_pad             0.0000            0.0000            0.0000            0.0000 
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
 clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
-register         328.3568           15.7533        2.5642e+08          344.3710  (  89.37%)
+register         292.6161           13.9336        2.5338e+08          306.8481  (  89.81%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational     14.8251           25.7744        3.6210e+08           40.9554  (  10.63%)
+combinational     12.2508           22.2252        3.5114e+08           34.8155  (  10.19%)
 --------------------------------------------------------------------------------------------------
-Total            343.1819 mW        41.5277 mW     6.1852e+08 pW       385.3264 mW
+Total            304.8669 mW        36.1588 mW     6.0452e+08 pW       341.6636 mW
 1
