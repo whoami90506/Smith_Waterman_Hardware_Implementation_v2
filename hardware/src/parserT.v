@@ -19,12 +19,14 @@ module Parser_T(
     output reg [`SRAM_ADDR_BIT-1 : 0] addr_o,
     output reg request_o,
     
-    output reg [2:0] t_out_o
+    output reg [2:0] t_out_o,
+    output [2:0] next_t_ow
 );
 
 
 reg [2:0] n_t_out_o;
 wire n_busy_o;
+assign next_t_ow = n_t_out_o;
 
 //state
 parameter IDLE = 2'b00;
