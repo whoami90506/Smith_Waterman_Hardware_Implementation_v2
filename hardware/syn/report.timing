@@ -6,15 +6,15 @@ Report : timing
         -max_paths 1
 Design : SmithWaterman
 Version: N-2017.09-SP2
-Date   : Wed Nov 20 14:06:34 2019
+Date   : Fri Nov 22 10:41:22 2019
 ****************************************
 
 Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
-  Startpoint: genblk1_91__PE_cell_v_out_a_reg_10_
+  Startpoint: genblk1_151__PE_cell_v_out_a_reg_10_
               (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: genblk1_91__PE_cell_v_out_a_reg_10_
+  Endpoint: genblk1_152__PE_cell_v_out_a_reg_11_
             (rising edge-triggered flip-flop clocked by clk)
   Path Group: clk
   Path Type: max
@@ -27,47 +27,45 @@ Wire Load Model Mode: top
   --------------------------------------------------------------------------
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
-  genblk1_91__PE_cell_v_out_a_reg_10_/CK (DFFRX2)         0.00       0.50 r
-  genblk1_91__PE_cell_v_out_a_reg_10_/QN (DFFRX2)         0.35       0.85 r
-  U160896/Y (NAND2X4)                                     0.09       0.94 f
-  U172108/Y (NAND4X4)                                     0.08       1.02 r
-  U119291/Y (NAND3X4)                                     0.07       1.08 f
-  U222924/Y (AOI21X4)                                     0.09       1.17 r
-  U215724/Y (OAI2BB1X4)                                   0.05       1.22 f
-  U172084/Y (AND2X8)                                      0.10       1.32 f
-  U172081/Y (INVX20)                                      0.08       1.41 r
-  U206673/Y (MXI2X4)                                      0.11       1.51 r
-  U155478/Y (INVX8)                                       0.07       1.58 f
-  U118724/Y (INVX8)                                       0.07       1.65 r
-  U208621/Y (OAI22X2)                                     0.08       1.73 f
-  U244449/Y (AOI21X4)                                     0.13       1.86 r
-  U224826/Y (NAND3X6)                                     0.07       1.92 f
-  U150561/Y (NAND3X6)                                     0.06       1.98 r
-  U160162/Y (NAND3X6)                                     0.07       2.05 f
-  U150245/Y (BUFX12)                                      0.09       2.15 f
-  U152280/Y (MXI2X4)                                      0.15       2.29 r
-  U175431/Y (NAND2X4)                                     0.08       2.37 f
-  U175430/Y (NAND2X6)                                     0.07       2.44 r
-  U120754/Y (INVX3)                                       0.05       2.49 f
-  U117951/Y (NAND2X4)                                     0.06       2.55 r
-  U153313/Y (NAND3X6)                                     0.06       2.61 f
-  U153312/Y (NAND3X6)                                     0.05       2.66 r
-  U244480/Y (AND3X8)                                      0.11       2.77 r
-  U161249/Y (NAND3X8)                                     0.07       2.84 f
-  U172135/Y (AND2X8)                                      0.11       2.96 f
-  U122503/Y (OAI2BB1X2)                                   0.08       3.04 r
-  U160883/Y (OAI2BB1X4)                                   0.08       3.11 f
-  U151995/Y (NAND2X6)                                     0.09       3.20 r
-  U151992/Y (NAND3X8)                                     0.12       3.32 f
-  U122748/Y (NOR3X4)                                      0.11       3.43 r
-  U220658/Y (XOR2X4)                                      0.08       3.51 r
-  genblk1_91__PE_cell_v_out_a_reg_10_/D (DFFRX2)          0.00       3.51 r
+  genblk1_151__PE_cell_v_out_a_reg_10_/CK (DFFRX4)        0.00       0.50 r
+  genblk1_151__PE_cell_v_out_a_reg_10_/Q (DFFRX4)         0.34       0.84 f
+  U197231/Y (NAND2BX4)                                    0.11       0.95 r
+  U189018/Y (NAND3X6)                                     0.08       1.03 f
+  U189017/Y (NOR3X4)                                      0.11       1.14 r
+  U189016/Y (OAI21X4)                                     0.07       1.20 f
+  U137147/Y (NAND3X6)                                     0.08       1.28 r
+  U137145/Y (BUFX20)                                      0.11       1.39 r
+  U190182/Y (MXI2X8)                                      0.15       1.54 r
+  U98270/Y (NAND2X6)                                      0.06       1.61 f
+  U197255/Y (OA21X4)                                      0.14       1.75 f
+  U197256/Y (OAI2BB1X4)                                   0.06       1.80 r
+  U197258/Y (NAND2X4)                                     0.05       1.85 f
+  U151638/Y (NAND3X4)                                     0.08       1.92 r
+  U108391/Y (NAND2X6)                                     0.04       1.97 f
+  U137010/Y (AND2X8)                                      0.12       2.08 f
+  U137008/Y (INVX20)                                      0.09       2.17 r
+  U137133/Y (BUFX20)                                      0.08       2.25 r
+  U137128/Y (MXI2X4)                                      0.10       2.35 f
+  U137096/Y (AOI2BB2X4)                                   0.15       2.50 r
+  U96946/Y (NAND3X4)                                      0.08       2.58 f
+  U137129/Y (CLKINVX6)                                    0.06       2.64 r
+  U108392/Y (NAND4X8)                                     0.07       2.71 f
+  U137109/Y (OR2X8)                                       0.14       2.85 f
+  U137108/Y (AND2X8)                                      0.13       2.99 f
+  U137136/Y (NAND2X4)                                     0.06       3.04 r
+  U137124/Y (AND2X8)                                      0.11       3.15 r
+  U95685/Y (NAND2X6)                                      0.06       3.21 f
+  U137106/Y (NOR2X8)                                      0.06       3.27 r
+  U137104/Y (AND2X8)                                      0.12       3.38 r
+  U137284/Y (NAND3X6)                                     0.06       3.44 f
+  U102440/Y (XOR2X4)                                      0.07       3.51 r
+  genblk1_152__PE_cell_v_out_a_reg_11_/D (DFFRX4)         0.00       3.51 r
   data arrival time                                                  3.51
 
   clock clk (rise edge)                                   3.21       3.21
   clock network delay (ideal)                             0.50       3.71
   clock uncertainty                                      -0.10       3.61
-  genblk1_91__PE_cell_v_out_a_reg_10_/CK (DFFRX2)         0.00       3.61 r
+  genblk1_152__PE_cell_v_out_a_reg_11_/CK (DFFRX4)        0.00       3.61 r
   library setup time                                     -0.10       3.51
   data required time                                                 3.51
   --------------------------------------------------------------------------
