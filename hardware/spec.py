@@ -9,7 +9,7 @@ value['ma']  = 3
 value['pe']  = 256
 value['sw']  = 24
 value['sa']  = 10
-value['buf'] = 6
+value['buf'] = 2
 value['t']   = 32
 
 # restriction

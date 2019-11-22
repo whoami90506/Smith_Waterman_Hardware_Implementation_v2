@@ -8,12 +8,12 @@
 
 `define SRAM_WORD_WIDTH  24
 `define SRAM_ADDR_BIT    10
-`define BUFFER_DEPTH     6
+`define BUFFER_DEPTH     2
 `define MAX_T_NUM_BIT    32
 
 `define DNA_PER_WORD     8 // WORD_WIDTH/3
 `define DNA_PER_WORD_BIT 3 // $clog2(DNA_PER_WORD)
 `define PE_NUM_BIT       8 // $clog2(PE_NUM)
-`define BUFFER_DEPTH_BIT 3 // $clog2(BUFFER_DEPTH+1)
+`define BUFFER_DEPTH_BIT 2 // $clog2(BUFFER_DEPTH+1)
 
 `endif
