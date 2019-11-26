@@ -6,3 +6,4 @@ sftp-config*
 *~*.xlsx
 *tsmc*
 *.sdf
+*library
