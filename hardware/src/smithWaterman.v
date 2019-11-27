@@ -54,9 +54,9 @@ wire [`PE_NUM-1 : 0] pQ_valid;
 //PE
 genvar idx;
 wire [2:0] PE_t [0 : `PE_NUM];
+wire [2:0] PE_t_internal [0 : `PE_NUM-1];
 wire [`CALC_BIT -1 : 0] PE_v   [0 : `PE_NUM];
-wire [`CALC_BIT -1 : 0] PE_v_a [0 : `PE_NUM];
-wire [`CALC_BIT -1 : 0] PE_f_b   [0 : `PE_NUM];
+wire [`CALC_BIT -1 : 0] PE_f   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_max [0 : `PE_NUM];
 wire [`PE_NUM -1 : 0] PE_update_w;
 
@@ -72,8 +72,7 @@ assign beta     = {{(`CALC_BIT - `MATCH_BIT){1'd1}}, beta_r     };
 
 assign PE_t  [0] = pT_t;
 assign PE_v  [0] = `CALC_BIT'd0;
-assign PE_v_a[0] = alpha;
-assign PE_f_b  [0] = beta;
+assign PE_f  [0] = 0;
 assign PE_max[0] = `CALC_BIT'd0;
 
 //buffer
@@ -96,9 +95,9 @@ Parser_Q pQ(.clk(clk), .rst_n(rst_n), .start_i(_start_i), .buffer_full_i(buf_ful
 
 generate
     for (idx = 0; idx < `PE_NUM; idx = idx+1) begin
-        PE PE_cell(.clk(clk), .rst_n(rst_n), .t_in(PE_t[idx]), .q_in(buf_q[idx]), .t_out(PE_t[idx+1]), .update_q_ow(PE_update_w[idx]),
-                   .v_in (PE_v[idx]  ), .v_in_a (PE_v_a[idx]  ), .f_in_b (PE_f_b[idx]  ), .max_in (PE_max[idx]  ),
-                   .v_out(PE_v[idx+1]), .v_out_a(PE_v_a[idx+1]), .f_out_b(PE_f_b[idx+1]), .max_out(PE_max[idx+1]), 
+        PE PE_cell(.clk(clk), .rst_n(rst_n), .t_i(PE_t[idx]), .q_i(buf_q[idx]), .t_o(PE_t[idx+1]), .update_q_ow(PE_update_w[idx]),
+                   .v_i(PE_v[idx]  ), .f_i(PE_f[idx]  ), .max_i(PE_max[idx]  ), .t_internal_o(PE_t_internal[idx]),
+                   .v_o(PE_v[idx+1]), .f_o(PE_f[idx+1]), .max_o(PE_max[idx+1]), 
                    .match_i(match), .mismatch_i(mismatch), .alpha_i(alpha), .beta_i(beta));
 
         Buffer buf_cell(.clk(clk), .rst_n(rst_n), .q_i({pQ_valid[idx], pQ_q}), .pouring_i(pQ_pouring), .update_iw(PE_update_w[idx]), 
@@ -106,7 +105,7 @@ generate
     end
 endgenerate
 
-Parser_Out parserOut (.clk(clk), .rst_n(rst_n), .t_end_i(PE_t[`PE_NUM-1]), .max_i(PE_max[`PE_NUM]), .v_i(PE_v[`PE_NUM]), 
+Parser_Out parserOut (.clk(clk), .rst_n(rst_n), .t_end_i(PE_t_internal[`PE_NUM-1]), .max_i(PE_max[`PE_NUM]), .v_i(PE_v[`PE_NUM]), 
     .t_reset_i(PE_t[`PE_NUM]), .result_o(result_o), .valid_o(valid_o), .match_idx_o(match_idx_o), .change_q_o(change_q_o), 
     .max_result_o(max_result_o));
 
@@ -127,15 +126,15 @@ always @(posedge clk or negedge rst_n) begin
         alpha_r    <= {`MATCH_BIT{1'd1}};
         beta_r     <= {`MATCH_BIT{1'd1}};
     end else begin
-        _start_i <= start_i;
-        _data_i <= data_i;
-        busy_o <= n_busy_o;
+        _start_i  <= start_i;
+        _data_i   <= data_i;
+        busy_o    <= n_busy_o;
         post_busy <= busy_o;
 
-        _match_i <= match_i;
+        _match_i    <= match_i;
         _mismatch_i <= mismatch_i;
-        _alpha_i <= alpha_i;
-        _beta_i <= beta_i;
+        _alpha_i    <= alpha_i;
+        _beta_i     <= beta_i;
 
         match_r    <= n_match_r;
         mismatch_r <= n_mismatch_r;
