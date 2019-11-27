@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`define CYCLE    2.4           	        // Modify your clock period here
+`define CYCLE    2.0           	        // Modify your clock period here
 `define TERMINATION  50000
 
 `define DATA_T "./testbench/dat/target01.dat"
@@ -74,9 +74,9 @@ initial begin
 		$fsdbDumpfile("sw_syn.fsdb");
 	`else
 		$fsdbDumpfile("sw.fsdb"); 
+		$fsdbDumpMDA;
 	`endif
 	$fsdbDumpvars;
-	$fsdbDumpMDA;
 
 	`ifdef SDF
 		$sdf_annotate(`SDFFILE, u_SmithWaterman);
@@ -98,10 +98,10 @@ always @(negedge clk) begin
 	data = sel_T ? T_mem[addr] : Q_mem[addr];
 
 	if(valid) begin
-		$display("[%10t] result of target[%0d] and query[%0d]: %0d", $time, t_idx, q_idx, result);
+		$display("[%10t] result of target[%3d] and query[%3d]: %5d", $time, t_idx, q_idx, result);
 		
 		if (change_q) begin
-			$display("[%10t] the most similar target to query[%0d]: target[%0d], score = %0d", $time, q_idx, match_idx, max_result);
+			$display("[%10t] the most similar target to query[%3d]: target[%3d], score = %5d", $time, q_idx, match_idx, max_result);
 			$display("====== query %0d finish ======", q_idx);
 
 			t_idx = 0;
