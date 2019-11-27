@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`define CYCLE    3.24           	        // Modify your clock period here
+`define CYCLE    2.4           	        // Modify your clock period here
 `define TERMINATION  50000
 
 `define DATA_T "./testbench/dat/target01.dat"
