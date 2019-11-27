@@ -48,7 +48,7 @@ wire [`SRAM_ADDR_BIT-1 : 0] pT_addr;
 wire [2:0] pT_t;
 
 //ParserQ
-wire pQ_busy, pQ_request, pQ_pouring;
+wire pQ_busy, pQ_request, pQ_pouring, pQ_pouring_last;
 wire [`SRAM_ADDR_BIT-1 : 0] pQ_addr;
 wire [1:0] pQ_q;
 wire [`PE_NUM-1 : 0] pQ_valid;
@@ -100,7 +100,7 @@ Parser_T pT(.clk(clk), .rst_n(rst_n), .start_i(_start_i), .q_ready_one_i(buf_rea
 
 Parser_Q pQ(.clk(clk), .rst_n(rst_n), .start_i(_start_i), .buffer_full_i(buf_full[`PE_NUM-1]), .busy_o(pQ_busy), 
     .data_i(loader_Q_data), .valid_i(loader_Q_valid), .addr_o(pQ_addr), .request_o(pQ_request), 
-    .q_out(pQ_q), .PE_valid_o(pQ_valid), .pouring_o(pQ_pouring));
+    .q_out(pQ_q), .PE_valid_o(pQ_valid), .pouring_o(pQ_pouring), .pouring_last_o(pQ_pouring_last));
 
 generate
     for (idx = 0; idx < `PE_NUM; idx = idx+1) begin
@@ -111,7 +111,8 @@ generate
                    .a2_i(a2), .ab_i(ab), .ma_a_i(ma_a), .mis_a_i(mis_a));
 
         Buffer buf_cell(.clk(clk), .rst_n(rst_n), .q_i({pQ_valid[idx], pQ_q}), .pouring_i(pQ_pouring), .update_iw(PE_update_w[idx]), 
-                .q_o(buf_q[idx]), .full_o(buf_full[idx]), .ready_one_o(buf_ready_one[idx]), .ready_two_o(buf_ready_two[idx]));
+                .q_o(buf_q[idx]), .full_o(buf_full[idx]), .ready_one_o(buf_ready_one[idx]), .ready_two_o(buf_ready_two[idx]), 
+                .pouring_last_i(pQ_pouring_last));
     end
 endgenerate
 

@@ -19,7 +19,7 @@ module Parser_Q(
 
     output reg [1:0] q_out,
     output reg [`PE_NUM-1 : 0] PE_valid_o,
-    output reg pouring_o
+    output reg pouring_o, pouring_last_o
 );
 
 reg [`SRAM_WORD_WIDTH-1 : 0] data_reg, n_data_reg;
@@ -152,6 +152,7 @@ always @(posedge clk or negedge rst_n) begin
         q_out <= 2'd0;
         PE_valid_o <= `PE_NUM'd0;
         pouring_o <= 1'b0;
+        pouring_last_o <= 1'b0;
 
         data_reg <= `SRAM_ADDR_BIT'd0;
         q_counter <= `PE_NUM_BIT'd0;
@@ -167,6 +168,7 @@ always @(posedge clk or negedge rst_n) begin
         q_out <= n_q_out;
         PE_valid_o <= n_PE_valid_o;
         pouring_o <= n_pouring_o;
+        pouring_last_o <= pouring_o;
 
         data_reg <= n_data_reg;
         q_counter <= n_q_counter;
