@@ -62,6 +62,10 @@ wire [`CALC_BIT -1 : 0] PE_f   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_max [0 : `PE_NUM];
 wire [`PE_NUM -1 : 0] PE_update_w;
 
+//buffer
+wire [2:0] buf_q [0 : `PE_NUM -1];
+wire [`PE_NUM-1 : 0] buf_full, buf_ready_one, buf_ready_two;
+
 assign n_match_r    = _start_i & (~busy_o | ~post_busy ) ? _match_i                                     : match_r;
 assign n_mismatch_r = _start_i & (~busy_o | ~post_busy ) ? ~_mismatch_i + `MATCH_BIT'd1                 : mismatch_r;
 assign n_alpha_r    = _start_i & (~busy_o | ~post_busy ) ? ~_alpha_i + `MATCH_BIT'd1                    : alpha_r;
@@ -83,10 +87,6 @@ assign PE_t  [0] = pT_t;
 assign PE_v  [0] = `CALC_BIT'd0;
 assign PE_f  [0] = 0;
 assign PE_max[0] = `CALC_BIT'd0;
-
-//buffer
-wire [2:0] buf_q [0 : `PE_NUM -1];
-wire [`PE_NUM-1 : 0] buf_full, buf_ready_one, buf_ready_two;
 
 assign n_busy_o = (_start_i | pT_busy) | (pQ_busy | buf_ready_one[`PE_NUM-1]) | start_i;
 
