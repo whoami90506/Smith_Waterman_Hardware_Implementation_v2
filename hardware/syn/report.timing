@@ -6,7 +6,7 @@ Report : timing
         -max_paths 1
 Design : SmithWaterman
 Version: N-2017.09-SP2
-Date   : Thu Nov 28 05:21:28 2019
+Date   : Thu Nov 28 07:03:18 2019
 ****************************************
 
 Operating Conditions: slow   Library: slow
@@ -14,7 +14,7 @@ Wire Load Model Mode: top
 
   Startpoint: alpha_r_reg_1_
               (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: genblk1_12__PE_cell_f_internal_reg_6_
+  Endpoint: genblk1_142__PE_cell_f_internal_reg_4_
             (rising edge-triggered flip-flop clocked by clk)
   Path Group: clk
   Path Type: max
@@ -28,40 +28,41 @@ Wire Load Model Mode: top
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
   alpha_r_reg_1_/CK (DFFRX4)                              0.00       0.50 r
-  alpha_r_reg_1_/Q (DFFRX4)                               0.30       0.80 f
-  U205813/Y (BUFX20)                                      0.09       0.89 f
-  U240540/Y (CLKBUFX8)                                    0.14       1.03 f
-  U242665/Y (INVX20)                                      0.10       1.13 r
-  U250723/Y (NOR2X4)                                      0.06       1.20 f
-  U405837/Y (CLKINVX1)                                    0.10       1.30 r
-  U405838/Y (NAND2X2)                                     0.06       1.36 f
-  U405839/Y (CLKXOR2X4)                                   0.19       1.55 f
-  U405843/Y (AOI2BB2X4)                                   0.15       1.70 f
-  U405844/Y (OAI21X4)                                     0.07       1.76 r
-  U184010/Y (NAND3X6)                                     0.07       1.83 f
-  U184009/Y (NAND3X6)                                     0.05       1.88 r
-  U283801/Y (OAI2BB1X4)                                   0.04       1.92 f
-  U229472/Y (OAI2BB1X4)                                   0.11       2.03 f
-  U229471/Y (NAND3X6)                                     0.05       2.08 r
-  U238081/Y (NAND2X4)                                     0.04       2.12 f
-  U274666/Y (OAI2BB1X4)                                   0.12       2.25 f
-  U288944/Y (OR2X8)                                       0.12       2.37 f
-  U288942/Y (INVX20)                                      0.07       2.44 r
-  U405871/Y (AO22X4)                                      0.10       2.53 r
-  genblk1_12__PE_cell_f_internal_reg_6_/D (DFFRX4)        0.00       2.53 r
-  data arrival time                                                  2.53
+  alpha_r_reg_1_/QN (DFFRX4)                              0.17       0.67 f
+  U224731/Y (INVX16)                                      0.08       0.76 r
+  U225268/Y (INVX16)                                      0.04       0.79 f
+  U225267/Y (INVX20)                                      0.04       0.84 r
+  U304420/Y (BUFX20)                                      0.12       0.96 r
+  U229455/Y (INVX20)                                      0.07       1.03 f
+  U194464/Y (NAND2X1)                                     0.22       1.25 r
+  U220415/Y (OAI2BB1X4)                                   0.11       1.35 f
+  U197964/Y (AO21X4)                                      0.15       1.50 f
+  U166692/Y (INVX8)                                       0.10       1.61 r
+  U228416/Y (NAND2X4)                                     0.06       1.66 f
+  U355495/Y (XNOR2X4)                                     0.14       1.80 r
+  U228384/Y (INVX6)                                       0.05       1.85 f
+  U300519/Y (AOI2BB2X4)                                   0.12       1.97 r
+  U209468/Y (NAND2X4)                                     0.06       2.03 f
+  U165267/Y (NAND2X4)                                     0.09       2.12 r
+  U289180/Y (CLKINVX6)                                    0.06       2.18 f
+  U173890/Y (NAND2X8)                                     0.06       2.24 r
+  U219880/Y (AND2X8)                                      0.11       2.35 r
+  U294814/Y (BUFX20)                                      0.09       2.44 r
+  U388991/Y (AO22X4)                                      0.11       2.54 r
+  genblk1_142__PE_cell_f_internal_reg_4_/D (DFFRX4)       0.00       2.54 r
+  data arrival time                                                  2.54
 
-  clock clk (rise edge)                                   1.50       1.50
-  clock network delay (ideal)                             0.50       2.00
-  clock uncertainty                                      -0.10       1.90
-  genblk1_12__PE_cell_f_internal_reg_6_/CK (DFFRX4)       0.00       1.90 r
-  library setup time                                     -0.09       1.81
-  data required time                                                 1.81
+  clock clk (rise edge)                                   2.23       2.23
+  clock network delay (ideal)                             0.50       2.73
+  clock uncertainty                                      -0.10       2.63
+  genblk1_142__PE_cell_f_internal_reg_4_/CK (DFFRX4)      0.00       2.63 r
+  library setup time                                     -0.09       2.54
+  data required time                                                 2.54
   --------------------------------------------------------------------------
-  data required time                                                 1.81
-  data arrival time                                                 -2.53
+  data required time                                                 2.54
+  data arrival time                                                 -2.54
   --------------------------------------------------------------------------
-  slack (VIOLATED)                                                  -0.72
+  slack (VIOLATED: increase significant digits)                      0.00
 
 
 1
