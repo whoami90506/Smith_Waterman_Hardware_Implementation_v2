@@ -6,8 +6,10 @@ Report : timing
         -max_paths 1
 Design : SmithWaterman
 Version: N-2017.09-SP2
-Date   : Thu Nov 28 09:31:34 2019
+Date   : Thu Nov 28 20:30:45 2019
 ****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
 
 Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
@@ -27,7 +29,7 @@ Wire Load Model Mode: top
   --------------------------------------------------------------------------
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
-  mis_a_r_reg_3_/CK (DFFRX4)                              0.00       0.50 r
+  mis_a_r_reg_3_/CK (DFFRX4)                              0.00 #     0.50 r
   mis_a_r_reg_3_/QN (DFFRX4)                              0.21       0.71 r
   U319179/Y (BUFX20)                                      0.09       0.80 r
   U278998/Y (INVX8)                                       0.18       0.98 f

@@ -54,11 +54,8 @@ wire [1:0] pQ_q;
 wire [`PE_NUM-1 : 0] pQ_valid;
 
 //buffer
-wire [2:0] buf_q [0 : `PE_NUM];
-wire [2:0] buf_next_q_w [0 : `PE_NUM];
+wire [2:0] buf_q [0 : `PE_NUM-1];
 wire [`PE_NUM-1 : 0] buf_full, buf_ready_one, buf_ready_two;
-assign buf_next_q_w[`PE_NUM] = 3'd0;
-assign buf_q[`PE_NUM] = 3'd0;
 
 //PE
 genvar idx;
@@ -67,10 +64,7 @@ wire [2:0] PE_t_internal [0 : `PE_NUM-1];
 wire [`CALC_BIT -1 : 0] PE_v   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_f   [0 : `PE_NUM];
 wire [`CALC_BIT -1 : 0] PE_max [0 : `PE_NUM];
-wire [`CALC_BIT -1 : 0] PE_v_diag_lut [0 : `PE_NUM];
 wire [`PE_NUM -1 : 0] PE_update_w;
-reg  [`CALC_BIT -1 : 0] PE_0_v_diag_lut;
-wire  [`CALC_BIT -1 : 0] n_PE_0_v_diag_lut;
 
 assign n_match_r    = _start_i & (~busy_o | ~post_busy ) ? _match_i                                     : match_r;
 assign n_mismatch_r = _start_i & (~busy_o | ~post_busy ) ? ~_mismatch_i + `MATCH_BIT'd1                 : mismatch_r;
@@ -93,8 +87,6 @@ assign PE_t  [0] = pT_t;
 assign PE_v  [0] = `CALC_BIT'd0;
 assign PE_f  [0] = 0;
 assign PE_max[0] = `CALC_BIT'd0;
-assign n_PE_0_v_diag_lut = (pT_next_t_w[1:0] == buf_next_q_w[0][1:0] ) ? match : mismatch; 
-assign PE_v_diag_lut[0] = PE_0_v_diag_lut;
 
 assign n_busy_o = (_start_i | pT_busy) | (pQ_busy | buf_ready_one[`PE_NUM-1]) | start_i;
 
