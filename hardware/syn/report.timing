@@ -6,15 +6,15 @@ Report : timing
         -max_paths 1
 Design : SmithWaterman
 Version: N-2017.09-SP2
-Date   : Thu Nov 28 11:36:28 2019
+Date   : Thu Nov 28 15:52:51 2019
 ****************************************
 
 Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
-  Startpoint: genblk1_134__PE_cell_diag_a_internal_reg_0_
+  Startpoint: genblk1_182__PE_cell_f_a_internal_reg_2_
               (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: genblk1_134__PE_cell_e_reg_reg_1_
+  Endpoint: genblk1_182__PE_cell_e_reg_reg_4_
             (rising edge-triggered flip-flop clocked by clk)
   Path Group: clk
   Path Type: max
@@ -27,39 +27,37 @@ Wire Load Model Mode: top
   --------------------------------------------------------------------------
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.50       0.50
-  genblk1_134__PE_cell_diag_a_internal_reg_0_/CK (DFFRX2)
+  genblk1_182__PE_cell_f_a_internal_reg_2_/CK (DFFRX2)
                                                           0.00       0.50 r
-  genblk1_134__PE_cell_diag_a_internal_reg_0_/Q (DFFRX2)
-                                                          0.37       0.87 f
-  U302358/Y (NAND2BX4)                                    0.10       0.97 f
-  U237944/Y (AOI21X1)                                     0.17       1.14 r
-  U327319/Y (OAI21X2)                                     0.08       1.22 f
-  U327322/Y (NAND3X2)                                     0.08       1.30 r
-  U327324/Y (NAND3X2)                                     0.08       1.38 f
-  U302334/Y (NAND2X4)                                     0.08       1.46 r
-  U302332/Y (AND3X8)                                      0.11       1.57 r
-  U302331/Y (INVX16)                                      0.05       1.62 f
-  U327368/Y (MXI2X4)                                      0.11       1.73 f
-  U239308/Y (OAI22X2)                                     0.20       1.94 r
-  U327375/Y (NOR3X2)                                      0.12       2.05 f
-  U327376/Y (AND3X4)                                      0.13       2.18 f
-  U302285/Y (OAI2BB1X4)                                   0.07       2.25 r
-  U297968/Y (NAND2X8)                                     0.06       2.30 f
-  U302284/Y (NAND2X6)                                     0.05       2.36 r
-  U302283/Y (NAND2X8)                                     0.11       2.47 f
-  U420184/Y (OAI22X1)                                     0.17       2.63 r
-  genblk1_134__PE_cell_e_reg_reg_1_/D (DFFRX2)            0.00       2.63 r
-  data arrival time                                                  2.63
+  genblk1_182__PE_cell_f_a_internal_reg_2_/Q (DFFRX2)     0.38       0.88 f
+  U286929/Y (AOI22X2)                                     0.16       1.04 r
+  U307032/Y (AOI21X4)                                     0.08       1.12 f
+  U307033/Y (OAI22X4)                                     0.09       1.22 r
+  U278952/Y (AOI21X4)                                     0.06       1.28 f
+  U202121/Y (OAI2BB1X4)                                   0.14       1.42 f
+  U236105/Y (NOR2X4)                                      0.08       1.49 r
+  U278950/Y (NOR2X4)                                      0.06       1.55 f
+  U187941/Y (INVX12)                                      0.08       1.64 r
+  U307050/Y (MXI2X2)                                      0.22       1.85 r
+  U294432/Y (OAI22X2)                                     0.12       1.98 f
+  U221472/Y (NOR2X4)                                      0.09       2.07 r
+  U307060/Y (OAI22X2)                                     0.06       2.13 f
+  U275416/Y (OAI2BB1X4)                                   0.14       2.27 f
+  U217638/Y (AND2X8)                                      0.10       2.37 f
+  U278715/Y (OR2X8)                                       0.15       2.52 f
+  U261324/Y (OAI22X1)                                     0.18       2.70 r
+  genblk1_182__PE_cell_e_reg_reg_4_/D (DFFRX1)            0.00       2.70 r
+  data arrival time                                                  2.70
 
-  clock clk (rise edge)                                   2.35       2.35
-  clock network delay (ideal)                             0.50       2.85
-  clock uncertainty                                      -0.10       2.75
-  genblk1_134__PE_cell_e_reg_reg_1_/CK (DFFRX2)           0.00       2.75 r
-  library setup time                                     -0.12       2.63
-  data required time                                                 2.63
+  clock clk (rise edge)                                   2.45       2.45
+  clock network delay (ideal)                             0.50       2.95
+  clock uncertainty                                      -0.10       2.85
+  genblk1_182__PE_cell_e_reg_reg_4_/CK (DFFRX1)           0.00       2.85 r
+  library setup time                                     -0.15       2.70
+  data required time                                                 2.70
   --------------------------------------------------------------------------
-  data required time                                                 2.63
-  data arrival time                                                 -2.63
+  data required time                                                 2.70
+  data arrival time                                                 -2.70
   --------------------------------------------------------------------------
   slack (MET)                                                        0.00
 
