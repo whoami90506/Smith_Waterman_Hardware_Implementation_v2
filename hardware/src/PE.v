@@ -9,48 +9,49 @@ module PE(
     input rst_n,
 
     input      [`CALC_BIT-1 :0] match_i, mismatch_i, alpha_i, beta_i,
-    input      [2 :0] t_in, q_in,
-    output reg [2 :0] t_out,
-    input      [`CALC_BIT-1 :0] v_in,  v_in_a,  f_in_b,  max_in,
-    output reg [`CALC_BIT-1 :0] v_out, v_out_a, f_out_b, max_out,
-    output update_q_ow,
-
-    input [2:0] next_PE_next_q_iw,
-    input [2:0] next_PE_q_i,
-    input [`CALC_BIT-1 :0] v_diag_lut_i,
-    output reg [`CALC_BIT-1 : 0] v_diag_lut_o
+    input      [`CALC_BIT-1 :0] a2_i, ab_i, ma_a_i, mis_a_i,
+    input      [2 :0] t_i, q_i,
+    output reg [2 :0] t_o, t_internal_o,
+    input      [`CALC_BIT-1 :0] v_i, f_i, max_i,
+    output reg [`CALC_BIT-1 :0] v_o, f_o, max_o,
+    output update_q_ow
 );
 
-reg  [`CALC_BIT-1 :0] n_v_out, n_f_out_b;
-wire [`CALC_BIT-1 :0] n_v_out_a, n_max_out, n_f_out;
+//buffer
+reg [`CALC_BIT -1 : 0] v_diag;
 
-//memory
-reg [`CALC_BIT-1 :0] e_reg_b;
-reg [`CALC_BIT-1 :0] n_e_reg_b, n_v_diag_lut_o;
-wire [`CALC_BIT-1 : 0] n_e_reg;
+//internel
+reg  [`CALC_BIT -1 : 0]   e_reg,   f_internal,   diag_0_internal, max_internal, f_a_internal, diag_a_internal;
+reg  [`CALC_BIT -1 : 0] n_e_reg, n_f_internal, n_diag_0_internal, n_f_a_internal, n_diag_a_internal;
+wire [`CALC_BIT -1 : 0] n_max_internal;
 
-//temp
-wire [`CALC_BIT-1 : 0] e_f_max, v_compare_0;
+//wire
+wire [`CALC_BIT -1 : 0] LUT_w, LUT_a_w;
+wire [`CALC_BIT -1 : 0] max_f_diag_w, n_v_o, max_f_diag_a_w;
 
-assign n_v_out_a = n_v_out + alpha_i;
-assign n_f_out   = $signed(v_in_a)  > $signed(f_in_b) ? v_in_a  : f_in_b;
-assign n_e_reg   = $signed(v_out_a) > $signed(e_reg_b) ? v_out_a : e_reg_b;
-assign n_max_out = v_in > max_in ? v_in : max_in;
-assign e_f_max   = $signed(n_e_reg) > $signed(n_f_out) ? n_e_reg : n_f_out;
-assign v_compare_0 = v_diag_lut_i[`CALC_BIT-1] ? 0 : v_diag_lut_i;
-assign update_q_ow = (t_in == 3'b001);
+assign LUT_w          = (t_i[1:0] == q_i[1:0]) ? v_diag + match_i : v_diag + mismatch_i;
+assign LUT_a_w        = (t_i[1:0] == q_i[1:0]) ? v_diag + ma_a_i  : v_diag + mis_a_i;
+assign max_f_diag_w   = $signed(f_internal)   > $signed(diag_0_internal) ? f_internal : diag_0_internal;
+assign max_f_diag_a_w = $signed(f_a_internal) > $signed(diag_a_internal) ? f_a_internal : diag_a_internal;
+assign n_v_o          = $signed(max_f_diag_w) > $signed(e_reg)           ? max_f_diag_w : e_reg;
+assign update_q_ow    = (t_i == 3'b001);
+assign n_max_internal = max_i > v_i ? max_i : v_i;
 
 
 always @(*) begin
-    
-    if(t_in[2] & q_in[2]) begin // calculating
-        n_e_reg_b = n_e_reg + beta_i;
-        n_f_out_b = n_f_out + beta_i;
-        n_v_out = $signed(e_f_max) > $signed(v_compare_0) ? e_f_max : v_compare_0;
+    if(t_i[2] & q_i[2]) begin // calculating
+        n_e_reg           = $signed(max_f_diag_a_w) > $signed(e_reg + beta_i)  ? max_f_diag_a_w : e_reg + beta_i;
+        n_f_internal      = $signed(f_i + beta_i)   > $signed(v_i   + alpha_i) ? f_i + beta_i   : v_i   + alpha_i;
+        n_f_a_internal    = $signed(f_i + ab_i)     > $signed(v_i   + a2_i)    ? f_i + ab_i     : v_i   + a2_i;
+        n_diag_a_internal = $signed(LUT_a_w)        > $signed(alpha_i)         ? LUT_a_w        : alpha_i;
+        n_diag_0_internal = LUT_w[`CALC_BIT-1]   ? 0 : LUT_w;
     end else begin 
-        n_v_out   = 0;
-        n_e_reg_b = beta_i;
-        n_f_out_b = beta_i;
+        n_e_reg           = 0;
+        n_f_internal      = 0;
+        n_f_a_internal    = alpha_i;
+        n_diag_0_internal = 0;
+        n_diag_a_internal = alpha_i;
+
     end
 
     if( t_out[2] & next_PE_q_i[2]) n_v_diag_lut_o = (t_in[1:0] == next_PE_next_q_iw[1:0]) ? v_out + match_i : v_out + mismatch_i;
@@ -59,23 +60,31 @@ end
 
 always @(posedge clk or negedge rst_n) begin
     if(~rst_n) begin
-        t_out <= 3'd0;
-        v_out <= 0;
-        v_out_a <= 0;
-        f_out_b <= 0;
-        max_out <= 0;
-
-        v_diag_lut_o <= 0;
-        e_reg_b <= 0;
+        t_o             <= 3'b0;
+        t_internal_o    <= 3'b0;
+        v_o             <= 0;
+        f_o             <= 0;
+        max_o           <= 0;
+        v_diag          <= 0;
+        e_reg           <= 0;
+        f_internal      <= 0;
+        diag_0_internal <= 0;
+        max_internal    <= 0;
+        f_a_internal    <= 0;
+        diag_a_internal <= 0;
     end else begin
-        t_out <= t_in;
-        v_out <= n_v_out;
-        v_out_a <= n_v_out_a;
-        f_out_b <= n_f_out_b;
-        max_out <= n_max_out;
-
-        v_diag_lut_o <= n_v_diag_lut_o;
-        e_reg_b <= n_e_reg_b;
+        t_o             <= t_internal_o;
+        t_internal_o    <= t_i;
+        v_o             <= n_v_o;
+        f_o             <= f_internal;
+        max_o           <= max_internal;
+        v_diag          <= v_i;
+        e_reg           <= n_e_reg;
+        f_internal      <= n_f_internal;
+        diag_0_internal <= n_diag_0_internal;
+        max_internal    <= n_max_internal;
+        f_a_internal    <= n_f_a_internal;
+        diag_a_internal <= n_diag_a_internal;
     end
 end
 endmodule
