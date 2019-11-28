@@ -53,9 +53,6 @@ always @(*) begin
         n_diag_a_internal = alpha_i;
 
     end
-
-    if( t_out[2] & next_PE_q_i[2]) n_v_diag_lut_o = (t_in[1:0] == next_PE_next_q_iw[1:0]) ? v_out + match_i : v_out + mismatch_i;
-    else                           n_v_diag_lut_o = (t_in[1:0] == next_PE_next_q_iw[1:0]) ?         match_i :         mismatch_i;
 end
 
 always @(posedge clk or negedge rst_n) begin
