@@ -98,10 +98,10 @@ always @(negedge clk) begin
 	data = sel_T ? T_mem[addr] : Q_mem[addr];
 
 	if(valid) begin
-		$display("[%10t] result of target[%3d] and query[%3d]: %5d", $time, t_idx, q_idx, result);
+		$display("[%10t] result of target[%4d] and query[%4d]: %5d", $time, t_idx, q_idx, result);
 		
 		if (change_q) begin
-			$display("[%10t] the most similar target to query[%3d]: target[%3d], score = %5d", $time, q_idx, match_idx, max_result);
+			$display("[%10t] the most similar target to query[%4d]: target[%4d], score = %5d", $time, q_idx, match_idx, max_result);
 			$display("====== query %0d finish ======", q_idx);
 
 			t_idx = 0;
