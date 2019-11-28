@@ -9,7 +9,7 @@ module Buffer (
     input rst_n,
 
     input [2:0] q_i,
-    input pouring_i,
+    input pouring_i, pouring_last_i,
 
     input update_iw,
     output reg [2:0] q_o,
@@ -27,7 +27,7 @@ reg [`BUFFER_DEPTH_BIT-1 : 0] write_ptr, n_write_ptr;
 
 reg [2:0]   data [0 : `BUFFER_DEPTH -1];
 reg [2:0] n_data [0 : `BUFFER_DEPTH -1];
-reg got_data, pouring_last;
+reg got_data;
 wire n_got_data;
 wire get, send;
 
@@ -36,7 +36,7 @@ assign n_full_o = n_size == `BUFFER_DEPTH;
 assign n_ready_one_o = n_size >= 1;
 assign n_ready_two_o = n_size >= 2;
 assign n_got_data = got_data ? pouring_i : q_i[2];
-assign get = (q_i[2] | (pouring_last & ~pouring_i & ~got_data)) & ~(full_o & ~update_iw);
+assign get = (q_i[2] | (pouring_last_i & ~pouring_i & ~got_data)) & ~(full_o & ~update_iw);
 assign send = update_iw && (size != `BUFFER_DEPTH_BIT'd0);
 assign next_q_ow = n_q_o;
 
@@ -88,7 +88,6 @@ always @(posedge clk or negedge rst_n) begin
 
         for(i = 0; i < `BUFFER_DEPTH; i = i+1)data[i] <= 3'b000;
         got_data <= 1'b0;
-        pouring_last <= 1'b0;
 
     end else begin
         q_o <= n_q_o;
@@ -102,7 +101,6 @@ always @(posedge clk or negedge rst_n) begin
 
         for(i = 0; i < `BUFFER_DEPTH; i = i+1)data[i] <= n_data[i];
         got_data <= n_got_data;
-        pouring_last <= pouring_i;
     end
 end
 
