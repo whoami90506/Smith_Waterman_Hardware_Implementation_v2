@@ -29,8 +29,10 @@ set report_inactive_arcs_format {from to when arc_type sense reason}
 set soft_stack_size_limit {80}
 set tso_post_client_restore_command {update_timing ; write_eco_opt_db ;}
 
+# set numCPU
 setMultiCpuUsage -localCpu max
 setDistributeHost -local
+
 init_design
 
 # global nets
