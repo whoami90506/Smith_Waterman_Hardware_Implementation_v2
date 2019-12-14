@@ -1,3 +1,7 @@
+# set numCPU
+setMultiCpuUsage -localCpu max
+setDistributeHost -local
+
 # Add Tie High/Low Cell
 setEndCapMode -reset
 setEndCapMode -boundary_tap false

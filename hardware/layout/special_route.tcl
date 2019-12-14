@@ -1,3 +1,7 @@
+# set numCPU
+setMultiCpuUsage -localCpu max
+setDistributeHost -local
+
 # Special Route
 setSrouteMode -viaConnectToShape { noshape }
 sroute -connect { corePin } -layerChangeRange { METAL1(1) METAL8(8) } -blockPinTarget { nearestTarget } -corePinTarget { firstAfterRowEnd } -allowJogging 1 -crossoverViaLayerRange { METAL1(1) METAL8(8) } -nets { VSS VDD } -allowLayerChange 1 -targetViaLayerRange { METAL1(1) METAL8(8) }
