@@ -7,4 +7,5 @@ echo ============================================ | tee -a apr.log
 date '+%m/%d %A %H:%M:%S Mylog finish innovus' | tee -a apr.log
 echo ============================================ | tee -a apr.log
 
+mv apr.log autosave/
 exit
