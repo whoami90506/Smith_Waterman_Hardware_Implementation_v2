@@ -1,5 +1,9 @@
 set floorPlanUti 0.4
 
+echo ==============================================
+echo   Mylog start load.tcl
+echo ==============================================
+
 source sw.globals
 
 # set numCPU
@@ -43,3 +47,7 @@ refinePlace -checkRoute 0 -preserveRouting 0 -rmAffectedRouting 0 -swapEEQ 0
 #Timing Report
 redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/null
 timeDesign -preCTS -pathReports -drvReports -slackReports -numPaths 50 -prefix SmithWaterman_preCTS -outDir timingReports
+
+echo ==============================================
+echo   Mylog finish load.tcl
+echo ==============================================

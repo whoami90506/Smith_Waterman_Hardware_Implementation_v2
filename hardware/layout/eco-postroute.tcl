@@ -1,9 +1,14 @@
+echo ==============================================
+echo   Mylog start eco-postroute.tcl
+echo ==============================================
+
 # set numCPU
 setMultiCpuUsage -localCpu max
 setDistributeHost -local
 
 setOptMode -fixCap true -fixTran true -fixFanoutLoad true
 optDesign -postRoute
+optDesign -postRoute -hold
 optDesign -postRoute -hold
 
 # Verify
@@ -13,3 +18,7 @@ setVerifyGeometryMode -area { 0 0 0 0 }
 
 # save 
 saveDesign autosave/eco_postRoute
+
+echo ==============================================
+echo   Mylog finish eco-postroute.tcl
+echo ==============================================

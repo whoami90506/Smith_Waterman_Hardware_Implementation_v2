@@ -1,3 +1,8 @@
+echo ==============================================
+echo   Mylog start nano_route.tcl
+echo ==============================================
+
+
 # set numCPU
 setMultiCpuUsage -localCpu max
 setDistributeHost -local
@@ -23,3 +28,7 @@ redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/nu
 timeDesign -postRoute -pathReports -drvReports -slackReports -numPaths 50 -prefix SmithWaterman_postRoute -outDir timingReports
 redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/null
 timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -prefix SmithWaterman_postRoute -outDir timingReports
+
+echo ==============================================
+echo   Mylog finish nano_route.tcl
+echo ==============================================

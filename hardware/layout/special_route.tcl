@@ -1,3 +1,8 @@
+echo ==============================================
+echo   Mylog start special_route.tcl
+echo ==============================================
+
+
 # set numCPU
 setMultiCpuUsage -localCpu max
 setDistributeHost -local
@@ -11,3 +16,7 @@ refinePlace -checkRoute 0 -preserveRouting 0 -rmAffectedRouting 0 -swapEEQ 0
 
 # verify Connectivity
 verifyConnectivity -type special -noUnroutedNet -error 1000 -warning 50
+
+echo ==============================================
+echo   Mylog finish special_route.tcl
+echo ==============================================

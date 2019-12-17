@@ -1,3 +1,7 @@
+echo ==============================================
+echo   Mylog start power.tcl
+echo ==============================================
+
 refinePlace -checkRoute 0 -preserveRouting 0 -rmAffectedRouting 0 -swapEEQ 0
 
 # Power Ring
@@ -12,3 +16,7 @@ addStripe -nets {VDD VSS} -layer METAL6 -direction vertical -width 1 -spacing 0.
 setVerifyGeometryMode -area { 0 0 0 0 } -minWidth true -minSpacing true -minArea true -sameNet true -short true -overlap true -offRGrid false -offMGrid true -mergedMGridCheck true -minHole true -implantCheck true -minimumCut true -minStep true -viaEnclosure true -antenna false -insuffMetalOverlap true -pinInBlkg false -diffCellViol true -sameCellViol false -padFillerCellsOverlap true -routingBlkgPinOverlap true -routingCellBlkgOverlap true -regRoutingOnly false -stackedViasOnRegNet false -wireExt true -useNonDefaultSpacing false -maxWidth true -maxNonPrefLength -1 -error 1000
 verifyGeometry
 setVerifyGeometryMode -area { 0 0 0 0 }
+
+echo ==============================================
+echo   Mylog finish power.tcl
+echo ==============================================

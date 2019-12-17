@@ -1,3 +1,7 @@
+echo ==============================================
+echo   Mylog start cts.tcl
+echo ==============================================
+
 # set numCPU
 setMultiCpuUsage -localCpu max
 setDistributeHost -local
@@ -45,3 +49,7 @@ redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/nu
 timeDesign -postCTS -hold -pathReports -slackReports -numPaths 50 -prefix SmithWaterman_postCTS -outDir timingReports
 redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/null
 timeDesign -postCTS -pathReports -drvReports -slackReports -numPaths 50 -prefix SmithWaterman_postCTS -outDir timingReports
+
+echo ==============================================
+echo   Mylog finish cts.tcl
+echo ==============================================
