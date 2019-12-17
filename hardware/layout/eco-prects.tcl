@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start eco-prects.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_eco-prects.tcl
 echo ==============================================
 
 # set numCPU
@@ -13,5 +13,5 @@ optDesign -preCTS
 saveDesign autosave/eco_prects
 
 echo ==============================================
-echo   Mylog finish eco-prects.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_eco-prects.tcl
 echo ==============================================

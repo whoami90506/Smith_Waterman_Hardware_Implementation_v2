@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start eco-postroute.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_eco-postroute.tcl
 echo ==============================================
 
 # set numCPU
@@ -20,5 +20,5 @@ setVerifyGeometryMode -area { 0 0 0 0 }
 saveDesign autosave/eco_postRoute
 
 echo ==============================================
-echo   Mylog finish eco-postroute.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_eco-postroute.tcl
 echo ==============================================

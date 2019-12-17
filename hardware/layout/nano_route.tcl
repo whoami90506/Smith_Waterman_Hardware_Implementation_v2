@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start nano_route.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_nano_route.tcl
 echo ==============================================
 
 
@@ -30,5 +30,5 @@ redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/nu
 timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -prefix SmithWaterman_postRoute -outDir timingReports
 
 echo ==============================================
-echo   Mylog finish nano_route.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_nano_route.tcl
 echo ==============================================

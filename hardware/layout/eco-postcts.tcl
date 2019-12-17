@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start eco-postcts.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_eco-postcts.tcl
 echo ==============================================
 
 
@@ -15,5 +15,5 @@ optDesign -postCTS -hold
 saveDesign autosave/eco_postcts
 
 echo ==============================================
-echo   Mylog finish eco-postcts.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_eco-postcts.tcl
 echo ==============================================

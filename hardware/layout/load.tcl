@@ -1,7 +1,7 @@
 set floorPlanUti 0.4
 
 echo ==============================================
-echo   Mylog start load.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_load.tcl
 echo ==============================================
 
 source sw.globals
@@ -49,5 +49,5 @@ redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/nu
 timeDesign -preCTS -pathReports -drvReports -slackReports -numPaths 50 -prefix SmithWaterman_preCTS -outDir timingReports
 
 echo ==============================================
-echo   Mylog finish load.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_load.tcl
 echo ==============================================

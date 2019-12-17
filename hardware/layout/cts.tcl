@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start cts.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_cts.tcl
 echo ==============================================
 
 # set numCPU
@@ -51,5 +51,5 @@ redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/nu
 timeDesign -postCTS -pathReports -drvReports -slackReports -numPaths 50 -prefix SmithWaterman_postCTS -outDir timingReports
 
 echo ==============================================
-echo   Mylog finish cts.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_cts.tcl
 echo ==============================================

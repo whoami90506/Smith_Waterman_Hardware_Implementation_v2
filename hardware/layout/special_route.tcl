@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start special_route.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_special_route.tcl
 echo ==============================================
 
 
@@ -18,5 +18,5 @@ refinePlace -checkRoute 0 -preserveRouting 0 -rmAffectedRouting 0 -swapEEQ 0
 verifyConnectivity -type special -noUnroutedNet -error 1000 -warning 50
 
 echo ==============================================
-echo   Mylog finish special_route.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_special_route.tcl
 echo ==============================================

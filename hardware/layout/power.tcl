@@ -1,5 +1,5 @@
 echo ==============================================
-echo   Mylog start power.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_start_power.tcl
 echo ==============================================
 
 refinePlace -checkRoute 0 -preserveRouting 0 -rmAffectedRouting 0 -swapEEQ 0
@@ -18,5 +18,5 @@ verifyGeometry
 setVerifyGeometryMode -area { 0 0 0 0 }
 
 echo ==============================================
-echo   Mylog finish power.tcl
+date +%m/%d_%A_%H:%M:%S_Mylog_finish_power.tcl
 echo ==============================================
