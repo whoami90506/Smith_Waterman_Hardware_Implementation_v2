@@ -14,6 +14,9 @@ setTieHiLoMode -reset
 setTieHiLoMode -cell {  TIEHI TIELO } -maxDistance 100 -maxFanOut 10 -honorDontTouch false -createHierPort false
 addTieHiLo -cell {TIEHI TIELO} -prefix LTIE
 
+# set post-cts timing constrains
+update_constraint_mode -name func_mode -sdc_files sw_apr_cts.sdc
+update_constraint_mode -name scan_mode -sdc_files sw_apr_cts.sdc
 
 # set_ccopt_property.tcl
 setOptMode -usefulSkewCCOpt standard
