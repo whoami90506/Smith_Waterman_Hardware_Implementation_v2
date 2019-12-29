@@ -1,7 +1,7 @@
 # You can only modify clock period 
 
 
-set cycle 3.0
+set cycle 20.0
 
 set t_in [expr $cycle/2]
 set t_out  0.5 
@@ -18,7 +18,7 @@ set_clock_uncertainty            0.1  [get_clocks clk]
 set_clock_latency                0.5  [get_clocks clk] 
 
 #Other Constraints 
-set_max_fanout 40 [current_design]
+set_max_fanout 60 [current_design]
 
 
 
