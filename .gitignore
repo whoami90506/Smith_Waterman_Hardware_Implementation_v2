@@ -8,3 +8,4 @@ sftp-config*
 *.sdf
 *library
 pi/
+*.gds

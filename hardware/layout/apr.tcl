@@ -66,4 +66,13 @@ setVerifyGeometryMode -area { 0 0 0 0 } -minWidth true -minSpacing true -minArea
 verifyGeometry > autosave/nano_route-verify.log
 setVerifyGeometryMode -area { 0 0 0 0 }
 
+# output
+saveNetlist SmithWaterman_apr.v
+all_hold_analysis_views
+all_setup_analysis_views
+write_sdf SmithWaterman_apr.sdf
+setStreamOutMode -specifyViaName default -SEvianames false -virtualConnection false -uniquifyCellNamesPrefix false -snapToMGrid false -textSize 1 -version
+3
+streamOut SmithWaterman_apr.gds -mapFile ../library/streamOut.map -libName DesignLib -merge { ../library/gds/tpz013g3_v1.1.gds ../library/gds/tsmc13gfsg_fram.gds } -outputMacros -units 1000 -mode ALL
+
 exit

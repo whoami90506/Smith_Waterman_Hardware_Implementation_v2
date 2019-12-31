@@ -1,5 +1,26 @@
 `timescale 1ns/1ps
-`define CYCLE    2.25           	        // Modify your clock period here
+
+`ifdef SYN
+	`define CYCLE    2.25
+`else
+	`ifdef APR
+		`define CYCLE 20.0
+	`else
+		`define CYCLE 10.0 // RTL
+	`endif
+`endif 
+
+`ifdef SYN
+	`define SDF
+	`define SDFFILE "syn/SmithWaterman_syn.sdf"
+`endif
+
+`ifdef APR
+	`define SDF
+	`define SDFFILE "layout/SmithWaterman_apr.sdf"
+`endif
+
+
 `define TERMINATION  50000
 
 `define DATA_T "./testbench/dat/target01.dat"
@@ -11,11 +32,6 @@
 `define TB_BETA     `MATCH_BIT'd1
 
 //`define DEBUG
-
-`ifdef SYN
-	`define SDF
-	`define SDFFILE "syn/SmithWaterman_syn.sdf"
-`endif
 
 `include "src/parameter.v"
 
