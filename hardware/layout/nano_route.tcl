@@ -8,8 +8,13 @@ setMultiCpuUsage -localCpu max
 setDistributeHost -local
 
 # Nano Route
-setNanoRouteMode -quiet -routeInsertAntennaDiode 1
-setNanoRouteMode -quiet -routeAntennaCellName ANTENNA
+# setNanoRouteMode -quiet -routeInsertAntennaDiode 1
+# setNanoRouteMode -quiet -routeAntennaCellName ANTENNA
+
+setNanoRouteMode -drouteFixAntenna false
+setNanoRouteMode -routeAntennaCellName "ANTENNA"
+setNanoRouteMode -routeInsertAntennaDiode false
+
 setNanoRouteMode -quiet -timingEngine {}
 setNanoRouteMode -quiet -routeWithSiDriven 1
 setNanoRouteMode -quiet -routeWithSiPostRouteFix 0
