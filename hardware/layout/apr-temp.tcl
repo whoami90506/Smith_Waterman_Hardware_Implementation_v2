@@ -1,16 +1,5 @@
-restoreDesign autosave/cts-post-eco.dat SmithWaterman
+restoreDesign autosave/nano_route-post-eco.dat SmithWaterman
 
-source special_route.tcl
-# sprcial route verify
-verifyConnectivity -type special -noUnroutedNet -error 1000 -warning 50 > autosave/special_route-verify.log
-
-source nano_route.tcl
-# nano_route pre-eco
-saveDesign autosave/nano_route-pre-eco
-redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/null
-timeDesign -postRoute -pathReports -drvReports -slackReports -numPaths 50 -prefix SmithWaterman_postRoute -outDir autosave > autosave/nano_route-pre-eco-setup.log
-redirect -quiet {set honorDomain [getAnalysisMode -honorClockDomains]} > /dev/null
-timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -prefix SmithWaterman_postRoute -outDir autosave > autosave/nano_route-pre-eco-hold.log
 # eco
 source eco-postroute.tcl
 # nano_route post-eco
@@ -29,8 +18,7 @@ saveNetlist SmithWaterman_apr.v
 all_hold_analysis_views
 all_setup_analysis_views
 write_sdf SmithWaterman_apr.sdf
-setStreamOutMode -specifyViaName default -SEvianames false -virtualConnection false -uniquifyCellNamesPrefix false -snapToMGrid false -textSize 1 -version
-3
+setStreamOutMode -specifyViaName default -SEvianames false -virtualConnection false -uniquifyCellNamesPrefix false -snapToMGrid false -textSize 1 -version 3
 streamOut SmithWaterman_apr.gds -mapFile ../library/streamOut.map -libName DesignLib -merge { ../library/gds/tpz013g3_v1.1.gds ../library/gds/tsmc13gfsg_fram.gds } -outputMacros -units 1000 -mode ALL
 
 exit
