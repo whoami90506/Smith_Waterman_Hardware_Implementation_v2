@@ -1,13 +1,11 @@
 `timescale 1ns/1ps
 
 `ifdef SYN
-	`define CYCLE    2.25
-`else
-	`ifdef APR
-		`define CYCLE 20.0
-	`else
-		`define CYCLE 10.0 // RTL
-	`endif
+	`define CYCLE  2.25
+`elsif APR
+	`define CYCLE 20.0
+`else // RTL
+	`define CYCLE 10.0 
 `endif 
 
 `ifdef SYN
@@ -23,8 +21,13 @@
 
 `define TERMINATION  50000
 
-`define DATA_T "./testbench/dat/target01.dat"
-`define DATA_Q "./testbench/dat/query01.dat"
+`ifdef TB2
+	`define DATA_T "./testbench/dat/target02.dat"
+	`define DATA_Q "./testbench/dat/query02.dat"
+`else 
+	`define DATA_T "./testbench/dat/target01.dat"
+	`define DATA_Q "./testbench/dat/query01.dat"
+`endif
 
 `define TB_MATCH    `MATCH_BIT'd6
 `define TB_MISMATCH `MATCH_BIT'd1
@@ -88,6 +91,8 @@ initial begin
 
 	`ifdef SYN
 		$fsdbDumpfile("sw_syn.fsdb");
+	`elsif APR
+		$fsdbDumpfile("sw_apr.fsdb");
 	`else
 		$fsdbDumpfile("sw.fsdb"); 
 		$fsdbDumpMDA;
