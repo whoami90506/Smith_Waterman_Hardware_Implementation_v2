@@ -1,9 +1,33 @@
 `timescale 1ns/1ps
-`define CYCLE    2.25           	        // Modify your clock period here
+
+`ifdef SYN
+	`define CYCLE  2.25
+`elsif APR
+	`define CYCLE 20.0
+`else // RTL
+	`define CYCLE 10.0 
+`endif 
+
+`ifdef SYN
+	`define SDF
+	`define SDFFILE "syn/SmithWaterman_syn.sdf"
+`endif
+
+`ifdef APR
+	`define SDF
+	`define SDFFILE "layout/SmithWaterman_apr.sdf"
+`endif
+
+
 `define TERMINATION  50000
 
-`define DATA_T "./testbench/dat/target01.dat"
-`define DATA_Q "./testbench/dat/query01.dat"
+`ifdef TB2
+	`define DATA_T "./testbench/dat/target02.dat"
+	`define DATA_Q "./testbench/dat/query02.dat"
+`else 
+	`define DATA_T "./testbench/dat/target01.dat"
+	`define DATA_Q "./testbench/dat/query01.dat"
+`endif
 
 `define TB_MATCH    `MATCH_BIT'd6
 `define TB_MISMATCH `MATCH_BIT'd1
@@ -11,11 +35,6 @@
 `define TB_BETA     `MATCH_BIT'd1
 
 //`define DEBUG
-
-`ifdef SYN
-	`define SDF
-	`define SDFFILE "syn/SmithWaterman_syn.sdf"
-`endif
 
 `include "src/parameter.v"
 
@@ -72,6 +91,8 @@ initial begin
 
 	`ifdef SYN
 		$fsdbDumpfile("sw_syn.fsdb");
+	`elsif APR
+		$fsdbDumpfile("sw_apr.fsdb");
 	`else
 		$fsdbDumpfile("sw.fsdb"); 
 		$fsdbDumpMDA;

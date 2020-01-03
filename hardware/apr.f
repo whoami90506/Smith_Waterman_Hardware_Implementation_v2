@@ -1,0 +1,1 @@
+testbench/testfixture.v layout/SmithWaterman_apr.v -v tsmc13_neg.v +access+r +define+APR +ncmaxdelays
