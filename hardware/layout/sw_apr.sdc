@@ -1,7 +1,7 @@
 # You can only modify clock period 
 
 
-set cycle 20.0
+set cycle 4.0
 
 set t_in [expr $cycle/2]
 set t_out  0.5 
@@ -33,8 +33,8 @@ set_output_delay  $t_out -clock clk [all_outputs]
 
 
 # additional
-set_input_transition   0.5     [all_inputs]
-set_clock_transition   0.1     [all_clocks]
+# set_input_transition   0.5     [all_inputs]
+# set_clock_transition   0.1     [all_clocks]
 
 
 
