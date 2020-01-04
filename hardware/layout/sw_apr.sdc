@@ -18,7 +18,7 @@ set_clock_uncertainty            0.1  [get_clocks clk]
 set_clock_latency                0.5  [get_clocks clk] 
 
 #Other Constraints 
-set_max_fanout 60 [current_design]
+set_max_fanout 20 [current_design]
 
 
 
