@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 `ifdef SYN
-	`define CYCLE  2.25
+	`define CYCLE  2.35
 `elsif APR
 	`define CYCLE 20.0
 `else // RTL
